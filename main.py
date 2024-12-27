@@ -4,6 +4,8 @@ Pygame module for rendering game
 
 import pygame
 
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 from player import Player
 
@@ -20,10 +22,14 @@ def main() -> None:
     dt = 0
     updateable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
 
     Player.containers = (updateable, drawable)
+    Asteroid.containers = (asteroids, updateable, drawable)
+    AsteroidField.containers = updateable
 
-    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    AsteroidField()
 
     while True:
         for event in pygame.event.get():
