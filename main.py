@@ -2,6 +2,8 @@
 Pygame module for rendering game
 """
 
+import sys
+
 import pygame
 
 from asteroid import Asteroid
@@ -28,7 +30,7 @@ def main() -> None:
     Asteroid.containers = (asteroids, updateable, drawable)
     AsteroidField.containers = updateable
 
-    Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    main_player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     AsteroidField()
 
     while True:
@@ -44,6 +46,11 @@ def main() -> None:
             player.update(dt)
 
         pygame.display.flip()
+
+        for a in asteroids:
+            if a.isCollision(main_player):
+                print("Game over!")
+                sys.exit(1)
 
         dt = clock.tick(165) / 1000
 
