@@ -1,7 +1,5 @@
 import random
-
 import pygame
-
 from circleshape import CircleShape
 from constants import ASTEROID_MIN_RADIUS
 
@@ -32,7 +30,7 @@ class Asteroid(CircleShape):
         new_asteroid_2 = Asteroid(self.position.x, self.position.y, new_radius)
         new_asteroid_1.velocity = vector1 * 1.2
         new_asteroid_2.velocity = vector2 * 1.2
-
+        return new_asteroid_1, new_asteroid_2
 import pytest
 import pygame
 from asteroid import Asteroid
@@ -70,9 +68,9 @@ def test_asteroid_split_large():
     # Test splitting larger asteroid
     large_asteroid = Asteroid(100, 100, ASTEROID_MIN_RADIUS * 2)
     large_asteroid.velocity = pygame.Vector2(1, 0)
-    original_radius = large_asteroid.radius
-    large_asteroid.split()
+    new_asteroids = large_asteroid.split()
     assert not large_asteroid.alive()  # Original should be killed
+    assert len(new_asteroids) == 2  # Should create two new asteroids
 
 def test_asteroid_collision():
     asteroid1 = Asteroid(100, 100, 20)
